@@ -14,7 +14,6 @@ export default function BrandsBand() {
           <ul className="brands-list">
             {BRANDS.map((brand) => (
               <li key={brand.name}>
-                <span className="brands-name">{brand.name}</span>
                 <img
                   className="brands-logo"
                   src={brand.logo}
