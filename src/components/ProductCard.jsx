@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { BowlMark } from './Logo.jsx';
+import { LogoImage } from './Logo.jsx';
 import { formatPrice } from '../lib/products.js';
 
 export default function ProductCard({ product }) {
@@ -13,7 +13,7 @@ export default function ProductCard({ product }) {
           <img src={product.image_url} alt={product.name} loading="lazy" />
         ) : (
           <div className="thumb-placeholder">
-            <BowlMark size={64} />
+            <LogoImage width={96} />
           </div>
         )}
       </Link>

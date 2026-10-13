@@ -1,5 +1,5 @@
 import { BRANDS } from '../data/brands.js';
-import { BowlMark } from './Logo.jsx';
+import { LogoImage } from './Logo.jsx';
 
 /** Yellow band with a white card and red "BRANDS" pill — mirrors the card back. */
 export default function BrandsBand() {
@@ -8,12 +8,20 @@ export default function BrandsBand() {
       <div className="container">
         <div className="brands-card">
           <div className="brands-card-top">
-            <BowlMark size={56} />
+            <LogoImage width={116} />
             <span className="brands-pill">BRANDS</span>
           </div>
           <ul className="brands-list">
             {BRANDS.map((brand) => (
-              <li key={brand}>{brand}</li>
+              <li key={brand.name}>
+                <span className="brands-name">{brand.name}</span>
+                <img
+                  className="brands-logo"
+                  src={brand.logo}
+                  alt={`${brand.name} logo`}
+                  loading="lazy"
+                />
+              </li>
             ))}
           </ul>
         </div>

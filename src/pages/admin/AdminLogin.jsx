@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { supabase, isSupabaseConfigured } from '../../lib/supabaseClient.js';
-import { BowlMark } from '../../components/Logo.jsx';
+import { LogoImage } from '../../components/Logo.jsx';
 
 export default function AdminLogin() {
   const navigate = useNavigate();
@@ -29,7 +29,7 @@ export default function AdminLogin() {
       <div className="container admin-login-wrap">
         <form className="enquiry-form" onSubmit={onSubmit}>
           <div className="admin-login-logo">
-            <BowlMark size={64} />
+            <LogoImage width={110} />
           </div>
           <h3>Bigbowl Back Office</h3>
 

@@ -2,10 +2,13 @@
 Extract the Bigbowl logo from the visiting card (VISTING CARD.png).
 
 Produces:
-  public/assets/bigbowl-logo.png   -> logo with transparent background
-                                      (yellow card background removed, but the
-                                      yellow "BIG DEALS BIG SAVINGS" tagline
-                                      inside the red bowl is preserved)
+  public/assets/bigbowl-logo.png        -> logo with transparent background
+                                           (yellow card background removed, but
+                                           the yellow "BIG DEALS BIG SAVINGS"
+                                           tagline inside the bowl is preserved)
+  public/assets/bigbowl-logo-light.png  -> variant for dark backgrounds (footer):
+                                           brand red becomes brand yellow, print
+                                           on the bowl becomes dark red
 
 Run from the repo root:
   python scripts/extract-logo.py
@@ -19,6 +22,7 @@ from PIL import Image, ImageFilter
 ROOT = Path(__file__).resolve().parent.parent
 SRC = ROOT / "VISTING CARD.png"
 OUT = ROOT / "public" / "assets" / "bigbowl-logo.png"
+OUT_LIGHT = ROOT / "public" / "assets" / "bigbowl-logo-light.png"
 
 # Wide region of the front (top) card that surely contains the logo, but may
 # also catch the red "ARAVIND" text / swoosh on the left panel — those get
@@ -27,6 +31,8 @@ REGION = (620, 60, 1330, 490)  # (left, top, right, bottom)
 PADDING = 16
 
 BRAND_RED = np.array([166, 30, 34])
+BRAND_YELLOW = np.array([255, 209, 0])
+BRAND_RED_DARK = np.array([124, 18, 22])
 CARD_YELLOW_G = 205  # green channel of the card's yellow background
 
 
@@ -172,6 +178,56 @@ def main():
     OUT.parent.mkdir(parents=True, exist_ok=True)
     Image.fromarray(rgba).save(OUT)
     print(f"Saved {OUT} ({rgba.shape[1]}x{rgba.shape[0]})")
+
+    light = make_light_variant(rgba)
+    Image.fromarray(light).save(OUT_LIGHT)
+    print(f"Saved {OUT_LIGHT} ({light.shape[1]}x{light.shape[0]})")
+
+
+def make_light_variant(rgba):
+    """Variant for dark backgrounds (e.g. the footer): brand red artwork
+    becomes brand yellow; white / yellow print on the bowl becomes dark red,
+    like ink on the card's yellow surfaces."""
+    out = rgba.copy()
+    rgb = out[..., :3].astype(int)
+    opaque = out[..., 3] > 0
+    yellowish = (
+        (rgb[..., 0] > 150)
+        & (rgb[..., 1] > 110)
+        & (rgb[..., 2] < 130)
+        & (rgb[..., 0] - rgb[..., 2] > 70)
+    )
+    whitish = (rgb[..., 0] > 180) & (rgb[..., 1] > 180) & (rgb[..., 2] > 180)
+    dark = (rgb[..., 0] < 100) & (rgb[..., 1] < 100) & (rgb[..., 2] < 90)
+
+    # yellow keylines touch the transparent surroundings; yellow print
+    # (tagline, TM interior) is fully enclosed by the artwork
+    touches_bg = dilate(~opaque, radius=2)
+    surface = flood(yellowish & touches_bg, yellowish)
+    yellow_print = yellowish & opaque & ~surface
+
+    out[surface & opaque, :3] = BRAND_YELLOW  # keylines -> uniform yellow
+    out[whitish & opaque, :3] = BRAND_RED_DARK
+    out[yellow_print, :3] = BRAND_RED_DARK
+    out[dark & opaque, :3] = BRAND_YELLOW
+    rest = opaque & ~whitish & ~yellowish & ~dark
+    out[rest, :3] = BRAND_YELLOW
+    return out
+
+
+def flood(seeds_mask, through):
+    """All `through` pixels reachable from `seeds_mask` (4-connectivity)."""
+    h, w = through.shape
+    seen = seeds_mask.copy()
+    ys, xs = np.nonzero(seeds_mask)
+    stack = list(zip(ys.tolist(), xs.tolist()))
+    while stack:
+        y, x = stack.pop()
+        for ny, nx in ((y - 1, x), (y + 1, x), (y, x - 1), (y, x + 1)):
+            if 0 <= ny < h and 0 <= nx < w and through[ny, nx] and not seen[ny, nx]:
+                seen[ny, nx] = True
+                stack.append((ny, nx))
+    return seen
 
 
 if __name__ == "__main__":

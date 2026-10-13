@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { supabase } from '../../lib/supabaseClient.js';
 import { formatPrice } from '../../lib/products.js';
-import { BowlMark } from '../Logo.jsx';
+import { LogoImage } from '../Logo.jsx';
 
 function Toggle({ checked, onChange, label }) {
   return (
@@ -88,7 +88,7 @@ export default function ProductsTab() {
                       {product.image_url ? (
                         <img src={product.image_url} alt="" className="admin-thumb" />
                       ) : (
-                        <BowlMark size={28} />
+                        <LogoImage width={36} />
                       )}
                     </div>
                   </td>

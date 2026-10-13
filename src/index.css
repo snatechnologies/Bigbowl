@@ -182,26 +182,6 @@ code {
 }
 
 .brand-lockup { display: flex; align-items: center; gap: 12px; }
-.brand-text { display: flex; flex-direction: column; line-height: 1.1; }
-
-.brand-text strong {
-  font-family: var(--font-head);
-  font-weight: 900;
-  font-size: 1.25rem;
-  letter-spacing: 0.04em;
-  color: var(--red);
-}
-
-.brand-text small {
-  font-size: 0.66rem;
-  font-weight: 600;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-
-.brand-text-light strong { color: var(--white); }
-.brand-text-light small { color: rgba(255, 255, 255, 0.75); }
 
 .site-nav { display: flex; align-items: center; gap: 26px; }
 
@@ -400,6 +380,10 @@ code {
 
 .thumb-placeholder-large { aspect-ratio: 4 / 3; border-radius: var(--radius); }
 
+/* the logo inside a placeholder keeps its own size (override the
+   product-photo cover rules, which target descendant <img> elements) */
+.thumb-placeholder .bigbowl-logo-image { width: auto; height: auto; object-fit: contain; }
+
 .product-info { display: flex; flex-direction: column; gap: 8px; padding: 20px; flex: 1; }
 
 .chip {
@@ -450,7 +434,7 @@ code {
   margin-bottom: 28px;
 }
 
-.brands-card-top .bowl-mark { margin-top: -30px; }
+.brands-card-top .bigbowl-logo-image { margin-top: -46px; }
 
 .brands-pill {
   background: var(--red);
@@ -471,12 +455,26 @@ code {
 }
 
 .brands-list li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 12px;
+  border-bottom: 1px solid var(--line);
+}
+
+.brands-name {
   font-family: var(--font-head);
   font-weight: 800;
   font-size: 1.02rem;
   color: var(--ink);
-  padding: 18px 12px;
-  border-bottom: 1px solid var(--line);
+}
+
+.brands-logo {
+  height: 44px;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
 }
 
 /* ── CTA band ────────────────────────────────────────────── */
@@ -506,9 +504,6 @@ code {
 
 .footer-brand p { font-size: 0.92rem; max-width: 40ch; margin-top: 16px; }
 .footer-logo { display: flex; align-items: center; gap: 12px; }
-.footer-logo .bowl-mark path[stroke] { stroke: var(--yellow); }
-.footer-logo .bowl-mark text[fill='#A61E22'] { fill: var(--yellow); }
-.footer-logo .bowl-mark path[fill='#A61E22'] { fill: var(--yellow); }
 
 .footer-col { display: flex; flex-direction: column; gap: 10px; font-size: 0.92rem; }
 

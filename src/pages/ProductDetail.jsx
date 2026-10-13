@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { BowlMark } from '../components/Logo.jsx';
+import { LogoImage } from '../components/Logo.jsx';
 import EnquiryForm from '../components/EnquiryForm.jsx';
 import { getProductBySlug, formatPrice } from '../lib/products.js';
 
@@ -61,7 +61,7 @@ export default function ProductDetail() {
               <img src={product.image_url} alt={product.name} />
             ) : (
               <div className="thumb-placeholder thumb-placeholder-large">
-                <BowlMark size={120} />
+                <LogoImage width={160} />
               </div>
             )}
           </div>

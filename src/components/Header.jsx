@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { BowlMark } from './Logo.jsx';
+import { LogoImage } from './Logo.jsx';
 
 const NAV_LINKS = [
   { to: '/', label: 'Home' },
@@ -17,11 +17,7 @@ export default function Header() {
     <header className="site-header">
       <div className="container header-inner">
         <Link to="/" className="brand-lockup" onClick={close} aria-label="Bigbowl home">
-          <BowlMark size={44} />
-          <span className="brand-text">
-            <strong>BIGBOWL</strong>
-            <small>Big Deals Big Savings</small>
-          </span>
+          <LogoImage height={54} />
         </Link>
 
         <button

@@ -133,64 +133,28 @@ export default function Logo({ width = 280, showTagline = true, className = '' }
 }
 
 /**
- * The authentic logo extracted from the visiting card artwork
- * (public/assets/bigbowl-logo.png, transparent background).
+ * The authentic Bigbowl logo extracted from the visiting card artwork
+ * (scripts/extract-logo.py → public/assets/bigbowl-logo.png), with a
+ * transparent background so it works on any surface.
+ *
+ * Pass either `width` or `height` — the other dimension follows the
+ * artwork's aspect ratio. Use `variant="light"` on dark backgrounds
+ * (e.g. the footer): brand red becomes brand yellow.
  */
-export function LogoImage({ width = 300, className = '' }) {
+export function LogoImage({ width, height, variant = 'default', className = '' }) {
+  const w = width ?? Math.round(((height ?? 242) * 438) / 354);
+  const h = height ?? Math.round((width * 354) / 438);
+  const src =
+    variant === 'light' ? '/assets/bigbowl-logo-light.png' : '/assets/bigbowl-logo.png';
   return (
     <img
-      src="/assets/bigbowl-logo.png"
-      width={width}
-      height={Math.round((width * 354) / 438)}
+      src={src}
+      width={w}
+      height={h}
       className={`bigbowl-logo-image ${className}`}
       alt="Saiambro Bigbowl — Big Deals Big Savings"
       loading="lazy"
       decoding="async"
     />
-  );
-}
-
-/** Small bowl mark used in the header, placeholders and footer. */
-export function BowlMark({ size = 40 }) {
-  return (
-    <svg
-      viewBox="0 0 64 60"
-      width={size}
-      height={(size * 60) / 64}
-      role="img"
-      aria-label="Bigbowl"
-      className="bowl-mark"
-    >
-      <path
-        d="M 19 28 A 13 13 0 0 1 45 28"
-        fill="none"
-        stroke="#A61E22"
-        strokeWidth="4"
-        strokeLinecap="round"
-      />
-      <text
-        x="32"
-        y="26.5"
-        textAnchor="middle"
-        fontFamily="Archivo, Arial, sans-serif"
-        fontSize="13"
-        fontWeight="900"
-        fill="#A61E22"
-      >
-        BIG
-      </text>
-      <path d="M 8 31 A 24 24 0 0 0 56 31 Z" fill="#A61E22" />
-      <text
-        x="32"
-        y="44"
-        textAnchor="middle"
-        fontFamily="Archivo, Arial, sans-serif"
-        fontSize="12"
-        fontWeight="900"
-        fill="#FFFFFF"
-      >
-        bowl
-      </text>
-    </svg>
   );
 }

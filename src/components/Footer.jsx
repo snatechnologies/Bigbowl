@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import { BowlMark } from './Logo.jsx';
-import { CONTACT, TAGLINE } from '../data/contact.js';
+import { LogoImage } from './Logo.jsx';
+import { CONTACT } from '../data/contact.js';
 
 export default function Footer() {
   return (
@@ -8,11 +8,7 @@ export default function Footer() {
       <div className="container footer-grid">
         <div className="footer-brand">
           <div className="footer-logo">
-            <BowlMark size={48} />
-            <span className="brand-text brand-text-light">
-              <strong>BIGBOWL</strong>
-              <small>{TAGLINE}</small>
-            </span>
+            <LogoImage height={64} variant="light" />
           </div>
           <p>
             Corporate gifts and office utilities from the brands your team already loves —
