@@ -285,6 +285,7 @@ code {
 
 .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; }
 .hero-logo { display: grid; place-items: center; }
+.hero-logo .bigbowl-logo-image { height: auto; filter: drop-shadow(0 10px 24px rgba(166, 30, 34, 0.18)); }
 
 .hero-stats {
   position: relative;
@@ -878,7 +879,7 @@ code {
 @media (max-width: 900px) {
   .hero-grid { grid-template-columns: 1fr; gap: 32px; }
   .hero-logo { order: -1; }
-  .hero-logo .bigbowl-logo { max-width: 220px; height: auto; }
+  .hero-logo .bigbowl-logo, .hero-logo .bigbowl-logo-image { max-width: 240px; height: auto; }
   .product-detail { grid-template-columns: 1fr; }
   .contact-grid { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr 1fr; }

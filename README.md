@@ -2,8 +2,9 @@
 
 Official website for **Saiambro Bigbowl** — corporate onboarding gifts, festival gifts and
 office utilities. Design follows the company visiting card: bright yellow and white surfaces,
-deep red accents, bold clean typography, and the Bigbowl bowl logo (recreated as SVG in
-`src/components/Logo.jsx`).
+deep red accents, bold clean typography, and the Bigbowl bowl logo — extracted from the
+visiting card (`scripts/extract-logo.py` → `public/assets/bigbowl-logo.png`) and also
+recreated as an inline SVG in `src/components/Logo.jsx`.
 
 ## Tech stack
 

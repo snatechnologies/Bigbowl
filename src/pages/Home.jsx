@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import Logo from '../components/Logo.jsx';
+import { LogoImage } from '../components/Logo.jsx';
 import CategoryIcon from '../components/CategoryIcon.jsx';
 import ProductCard from '../components/ProductCard.jsx';
 import BrandsBand from '../components/BrandsBand.jsx';
@@ -42,7 +42,7 @@ export default function Home() {
               </div>
             </div>
             <div className="hero-logo">
-              <Logo width={300} />
+              <LogoImage width={320} />
             </div>
           </div>
 

@@ -1,104 +1,152 @@
 /**
- * Bigbowl logo recreated as inline SVG from the visiting card:
- * arched "SAIAMBRO", basket handles, "BIG" in brand red, white "bowl"
- * on the red bowl, and the "BIG DEALS BIG SAVINGS" tagline.
+ * Bigbowl logo, recreated as inline SVG from the visiting card:
+ * arched "SAIAMBRO" riding the basket handle, "BIG" in brand red,
+ * a red bowl with white "bowl" letters, the yellow "BIG DEALS BIG
+ * SAVINGS" tagline inside the bowl, and the TM mark.
+ *
+ * The geometry mirrors the card artwork so the tagline always stays
+ * inside the bowl: `textLength` pins every line of text to a fixed
+ * width, so font fallbacks can never push the tagline outside.
  */
 export default function Logo({ width = 280, showTagline = true, className = '' }) {
-  const height = showTagline ? 300 : 272;
+  // viewBox 34 52 252 216 — matches the card artwork's proportions
   return (
     <svg
       className={`bigbowl-logo ${className}`}
-      viewBox={`0 0 320 ${height}`}
+      viewBox="34 52 252 216"
       width={width}
-      height={(width * height) / 320}
+      height={(width * 216) / 252}
       role="img"
       aria-label="Saiambro Bigbowl — Big Deals Big Savings"
     >
       <defs>
-        <path id="bb-arch" d="M 58 132 A 102 102 0 0 1 262 132" fill="none" />
+        <path id="bb-arch" d="M 88 150 A 72 72 0 0 1 232 150" fill="none" />
       </defs>
 
-      {/* arched SAIAMBRO */}
+      {/* basket handle — yellow keyline under the brand-red stroke */}
+      <path
+        d="M 90 170 L 90 150 A 70 70 0 0 1 230 150 L 230 170"
+        fill="none"
+        stroke="#FFD100"
+        strokeWidth="15"
+      />
+      <path
+        d="M 90 170 L 90 150 A 70 70 0 0 1 230 150 L 230 170"
+        fill="none"
+        stroke="#A61E22"
+        strokeWidth="10"
+      />
+
+      {/* arched SAIAMBRO overlapping the top of the handle */}
       <text
         fontFamily="Archivo, Arial, sans-serif"
-        fontSize="19"
+        fontSize="15"
         fontWeight="800"
         fill="#A61E22"
-        letterSpacing="7"
+        stroke="#FFD100"
+        strokeWidth="0.6"
+        paintOrder="stroke"
+        letterSpacing="2.5"
       >
         <textPath href="#bb-arch" startOffset="50%" textAnchor="middle">
           SAIAMBRO
         </textPath>
       </text>
 
-      {/* basket handles */}
-      <path
-        d="M 76 134 A 84 84 0 0 1 244 134"
-        fill="none"
-        stroke="#A61E22"
-        strokeWidth="10"
-        strokeLinecap="round"
-      />
-
       {/* BIG */}
       <text
         x="160"
-        y="126"
+        y="138"
         textAnchor="middle"
         fontFamily="Archivo, Arial, sans-serif"
-        fontSize="56"
+        fontSize="48"
         fontWeight="900"
         fill="#A61E22"
-        letterSpacing="2"
+        stroke="#FFD100"
+        strokeWidth="1.4"
+        paintOrder="stroke"
+        textLength="72"
+        lengthAdjust="spacingAndGlyphs"
       >
         BIG
       </text>
 
-      {/* red bowl */}
-      <path d="M 40 140 A 120 120 0 0 0 280 140 Z" fill="#A61E22" />
-
-      {/* bowl */}
-      <text
-        x="160"
-        y="206"
-        textAnchor="middle"
-        fontFamily="Archivo, Arial, sans-serif"
-        fontSize="62"
-        fontWeight="900"
-        fill="#FFFFFF"
-      >
-        bowl
-      </text>
-
-      {showTagline && (
-        <text
-          x="160"
-          y="238"
-          textAnchor="middle"
-          fontFamily="Archivo, Arial, sans-serif"
-          fontSize="12.5"
-          fontWeight="700"
-          fill="#FFD100"
-          letterSpacing="3.5"
-        >
-          — BIG DEALS BIG SAVINGS —
-        </text>
-      )}
-
       {/* TM mark */}
-      <circle cx="290" cy="66" r="12" fill="none" stroke="#A61E22" strokeWidth="1.6" />
+      <circle cx="254" cy="130" r="9.3" fill="none" stroke="#A61E22" strokeWidth="1.5" />
       <text
-        x="290"
-        y="70.5"
+        x="254"
+        y="133"
         textAnchor="middle"
         fontFamily="Archivo, Arial, sans-serif"
-        fontSize="11"
+        fontSize="7.5"
         fontWeight="800"
         fill="#A61E22"
       >
         TM
       </text>
+
+      {/* red bowl — steep sides and a slightly flattened bottom, as on the card */}
+      <path
+        d="M 42 150 C 42 214, 66 252, 112 260 L 208 260 C 254 252, 278 214, 278 150 Z"
+        fill="#A61E22"
+        stroke="#FFD100"
+        strokeWidth="2.5"
+      />
+
+      {/* bowl */}
+      <text
+        x="160"
+        y="227"
+        textAnchor="middle"
+        fontFamily="Archivo, Arial, sans-serif"
+        fontSize="84"
+        fontWeight="900"
+        fill="#FFFFFF"
+        textLength="170"
+        lengthAdjust="spacingAndGlyphs"
+      >
+        bowl
+      </text>
+
+      {/* tagline — pinned to a fixed width so it always fits inside the bowl */}
+      {showTagline && (
+        <>
+          <line x1="76" y1="239" x2="92" y2="239" stroke="#FFD100" strokeWidth="1.6" />
+          <text
+            x="160"
+            y="242.5"
+            textAnchor="middle"
+            fontFamily="Archivo, Arial, sans-serif"
+            fontSize="9.5"
+            fontWeight="700"
+            fill="#FFD100"
+            textLength="130"
+            lengthAdjust="spacingAndGlyphs"
+          >
+            BIG DEALS BIG SAVINGS
+          </text>
+          <line x1="228" y1="239" x2="244" y2="239" stroke="#FFD100" strokeWidth="1.6" />
+        </>
+      )}
     </svg>
+  );
+}
+
+/**
+ * The authentic logo extracted from the visiting card artwork
+ * (public/assets/bigbowl-logo.png, transparent background).
+ */
+export function LogoImage({ width = 300, className = '' }) {
+  return (
+    <img
+      src="/assets/bigbowl-logo.png"
+      width={width}
+      height={Math.round((width * 354) / 438)}
+      className={`bigbowl-logo-image ${className}`}
+      alt="Saiambro Bigbowl — Big Deals Big Savings"
+      loading="lazy"
+      decoding="async"
+    />
   );
 }
 
